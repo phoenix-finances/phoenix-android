@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:focusable="true"
+        android:clickable="true">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView.time"
+                android:text="2 min Ago"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView.des"
+                android:text="Cash Out"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="12sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr Cr"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:id="@+id/textView.drCr"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView.note"
+                android:textStyle="italic"
+                android:text=""
+                android:visibility="gone"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView.rawTransactionInfo"
+            android:text="300"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:padding="8dp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="global_publication_item_width">200</integer>
+    <integer name="global_ledger_width">100</integer>
+</resources>

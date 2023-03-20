@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#689f38</color>
+    <color name="colorPrimaryDark">#537f2d</color>
+    <color name="colorAccent">#537f2d</color>
+
+    <color name="colorBlack">#232823</color>
+    <color name="colorGreen">#2e7d32</color>
+    <color name="colorWhite">#fcfcfc</color>
+
+    <color name="blue_grey_500">#607D8B</color>
+    <color name="blue_grey_600">#546E7A</color>
+    <color name="blue_grey_700">#455A64</color>
+    <color name="blue_grey_800">#37474F</color>
+    <color name="blue_grey_900">#263238</color>
+
+    <color name="graph_grid_base">#bfbfbf</color>
+    <color name="graph_grid_x">#e52a8434</color>
+    <color name="graph_grid_nx">#e6f57037</color>
+    <color name="graph_grid_both">#e4e4e4</color>
+    <color name="graph_grid_text">#484848</color>
+</resources>
