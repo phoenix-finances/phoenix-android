@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements
                 }
             });
         }
-        //startLauncher();
+        startLauncher();
     }
 
     @Override

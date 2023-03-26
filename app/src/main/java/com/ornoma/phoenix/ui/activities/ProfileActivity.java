@@ -215,9 +215,9 @@ public class ProfileActivity extends AppCompatActivity
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                    @SuppressWarnings("VisibleForTests")
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    msg("Backup Successful");
+                    //@SuppressWarnings("VisibleForTests")
+                    //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    //msg("Backup Successful");
                 }
             });
         }

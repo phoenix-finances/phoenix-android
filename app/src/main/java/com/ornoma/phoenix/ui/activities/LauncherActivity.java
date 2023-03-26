@@ -100,9 +100,7 @@ implements NavigationView.OnNavigationItemSelectedListener{
             catch (Exception e){e.printStackTrace();}
             //finish();
         }
-        imageButtonProfile.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                openProfileActivity();}});
+        imageButtonProfile.setOnClickListener(v -> openProfileActivity());
     }
 
     private void openProfileActivity(){

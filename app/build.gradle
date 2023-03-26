@@ -98,9 +98,14 @@ dependencies {
     //implementation 'pub.devrel:easypermissions:0.2.1'
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
 
-    implementation 'com.google.firebase:firebase-auth:10.2.6'
-
-    implementation 'com.google.firebase:firebase-storage:10.2.6'
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.google.firebase:firebase-core'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-config'
+    //implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-storage'
 
     //https://github.com/whilu/AndroidTagView
     //implementation 'co.lujun:androidtagview:1.1.3'
