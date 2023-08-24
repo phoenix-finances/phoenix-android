@@ -4,34 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.LoginActivity">
+    tools:context=".ui.activities.">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LogIn"
+        android:text="Create New Account"
         android:gravity="center"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="130dp"
         android:textSize="70dp"
         android:fontFamily="cursive"
-        android:textColor="#0000FF"
-        android:id="@+id/tvLOGIN"/>
+        android:textColor="#0000FF" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/tvLOGIN"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/nameLayout">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="name"
+            tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/nameLayout"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/emailLayout">
 
         <EditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:id="@+id/etEmail"/>
+            tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -52,26 +69,24 @@
             android:inputType="textPassword"
             android:id="@+id/etPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
+
     <Button
+        android:id="@+id/regButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LOG IN"
         android:layout_below="@id/passwordLayout"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
         android:background="#0000FF"
-        android:textColor="@color/blue_grey_500"
-        android:id="@+id/logButton"
-        />
+        android:text="Register"
+        android:textColor="#9CCC65" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Not registered! Create your account."
-        android:layout_below="@id/logButton"
+        android:text="Already register? LogIn here"
+        android:layout_below="@id/regButton"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:id="@+id/regLink"/>
-
-
+        android:id="@+id/loginLink"/>
 </RelativeLayout>

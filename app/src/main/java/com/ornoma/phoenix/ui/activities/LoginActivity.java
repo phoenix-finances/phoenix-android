@@ -1,5 +1,6 @@
 package com.ornoma.phoenix.ui.activities;
 
+/*
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -67,7 +68,11 @@ public class LoginActivity extends AppCompatActivity implements
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this */
+/* FragmentActivity *//*
+, this */
+/* OnConnectionFailedListener *//*
+)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         // [END build_client]
@@ -266,3 +271,115 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
 }
+*/
+
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Patterns;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.ornoma.phoenix.R;
+import com.ornoma.phoenix.api.RetrofitClient;
+import com.ornoma.phoenix.response.LogInResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    EditText email, password;
+    Button logIn;
+    TextView registerLink;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        email = findViewById(R.id.etEmail);
+        password = findViewById(R.id.etPassword);
+        logIn = findViewById(R.id.logButton);
+        registerLink = findViewById(R.id.regLink);
+
+        registerLink.setOnClickListener(this);
+        logIn.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        /*  switch (view.getId()){
+            case R.id.logButton:
+                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                break;
+
+            case R.id.regLink:
+                switchOnRegister();
+        }*/
+        int viewId = view.getId();
+        if (viewId == R.id.logButton){
+            userLogin();
+        }else if(viewId==R.id.regLink){
+            switchOnRegister();
+        }
+    }
+
+    private void switchOnRegister() {
+        Intent intent = new Intent(LoginActivity.this,RegistrationActivity.class);
+        startActivity(intent);
+    }
+
+    private void userLogin() {
+        String userEmail = email.getText().toString().trim();
+        String userPassword = password.getText().toString().trim();
+
+        if (userEmail.isEmpty()) {
+            email.requestFocus();
+            email.setError("Please Enter you email");
+            return;
+        }
+        //Email matching
+        if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+            email.requestFocus();
+            email.setError("Please Enter you correct email.");
+            return;
+        }
+        if (userPassword.isEmpty()) {
+            password.requestFocus();
+            password.setError("Please enter your password");
+            return;
+        }
+        if (userPassword.length() < 8) {
+            password.requestFocus();
+            password.setError("Please Enter correct password");
+        }
+
+        Call<LogInResponse> call = RetrofitClient.getInstance().getApi().login(userEmail,userPassword);
+        call.enqueue(new Callback<LogInResponse>() {
+            @Override
+            public void onResponse(Call<LogInResponse> call, Response<LogInResponse> response) {
+                LogInResponse logInResponse =response.body();
+                if(response.isSuccessful()){
+                    Intent intent = new Intent(LoginActivity.this,RegistrationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(LoginActivity.this, logInResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LogInResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+        Intent intent = new Intent(LoginActivity.this,LoginActivity.class);
+    }

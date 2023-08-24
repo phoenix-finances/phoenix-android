@@ -115,6 +115,12 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //Material
+    implementation ("com.google.android.material:material:1.0.0")
+    //Retrofit Dependencies
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //gson dependencies
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
 
 apply plugin: 'com.google.gms.google-services'
