@@ -1,4 +1,4 @@
-package com.ornoma.phoenix.response;
+package com.ornoma.phoenix.api.response;
 
 public class User {
     int id;

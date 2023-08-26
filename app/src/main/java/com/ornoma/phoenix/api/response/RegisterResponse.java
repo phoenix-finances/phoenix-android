@@ -1,21 +1,12 @@
-package com.ornoma.phoenix.response;
+package com.ornoma.phoenix.api.response;
 
-public class LogInResponse {
-    User user;
-    String error,message;
+public class RegisterResponse {
+    String error;
+    String message;
 
-    public LogInResponse(User user, String error, String message) {
-        this.user = user;
+    public RegisterResponse(String error, String message) {
         this.error = error;
         this.message = message;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getError() {
