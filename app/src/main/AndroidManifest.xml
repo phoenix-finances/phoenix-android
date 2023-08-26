@@ -28,8 +28,10 @@
         <activity
             android:name="com.ornoma.phoenix.ui.activities.LedgerDetailActivity"
             android:exported="false"/>
-        <activity
-            android:name="com.ornoma.phoenix.ui.activities.ProfileActivity"
+<!--        <activity-->
+<!--            android:name="com.ornoma.phoenix.ui.activities.ProfileActivity"-->
+<!--            android:exported="false"/>-->
+        <activity android:name="com.ornoma.phoenix.ui.activities.RegistrationActivity"
             android:exported="false"/>
         <activity
             android:name="com.ornoma.phoenix.ui.activities.LoginActivity"
