@@ -19,16 +19,16 @@ data class UserResponse(
 )
 
 data class RegistrationRequest(
-    var userName: String,
-    var userEmail: String,
+    var name: String,
+    var email:String,
     var password: String
 )
 
 data class RegistrationResponse(
-    val email: String,
     @SerializedName("id")
     val id: Long,
     val name: String,
+    val email: String,
     val password: String
 )
 

@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = RegistrationActivity.class.getSimpleName();
-    EditText name, email, password;
+    EditText userName, userEmail, userPassword;
     Button registerButton;
     TextView loginLink;
 
@@ -35,9 +35,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_registration);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        name = findViewById(R.id.etName);
-        email = findViewById(R.id.etEmail);
-        password = findViewById(R.id.etPassword);
+        userName = findViewById(R.id.etName);
+        userEmail = findViewById(R.id.etEmail);
+        userPassword = findViewById(R.id.etPassword);
         registerButton = findViewById(R.id.regButton);
         loginLink = findViewById(R.id.loginLink);
 
@@ -58,37 +58,37 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void registerUser() {
-        String userName = name.getText().toString();
-        String userEmail = email.getText().toString().trim();
-        String userPassword = password.getText().toString().trim();
+        String name = userName.getText().toString();
+        String email = userEmail.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
 
-        if (userName.isEmpty()) {
-            name.requestFocus();
-            name.setError("Please Enter you name");
+        if (name.isEmpty()) {
+            userName.requestFocus();
+            userName.setError("Please Enter you name");
             return;
         }
-        if (userEmail.isEmpty()) {
-            email.requestFocus();
-            email.setError("Please Enter you email");
+        if (email.isEmpty()) {
+            userEmail.requestFocus();
+            userEmail.setError("Please Enter you email");
             return;
         }
         //Email matching
-        if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
-            email.requestFocus();
-            email.setError("Please Enter you correct email.");
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            userEmail.requestFocus();
+            userEmail.setError("Please Enter you correct email.");
             return;
         }
-        if (userPassword.isEmpty()) {
-            password.requestFocus();
-            password.setError("Please enter your password");
+        if (password.isEmpty()) {
+            userPassword.requestFocus();
+            userPassword.setError("Please enter your password");
             return;
         }
-        if (userPassword.length() < 4) {
-            password.requestFocus();
-            password.setError("Please Enter correct password");
+        if (password.length() < 4) {
+            userPassword.requestFocus();
+            userPassword.setError("Please Enter correct password");
             return;
         }
-        RegistrationRequest request = new RegistrationRequest(userName, userEmail, userPassword);
+        RegistrationRequest request = new RegistrationRequest(name, email, password);
        Call<RegistrationResponse> call = RetrofitClient.getInstance()
                .getApi().register(request);
        call.enqueue(new Callback<RegistrationResponse>() {
