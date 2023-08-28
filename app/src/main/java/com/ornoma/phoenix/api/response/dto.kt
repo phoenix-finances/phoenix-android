@@ -1,5 +1,7 @@
 package com.ornoma.phoenix.api.response
 
+import com.google.gson.annotations.SerializedName
+
 data class LoginRequest (
     var email:String,
     var password:String
@@ -14,6 +16,20 @@ data class UserResponse(
     var id: Long,
     var email: String,
     var name: String
+)
+
+data class RegistrationRequest(
+    var userName: String,
+    var userEmail: String,
+    var password: String
+)
+
+data class RegistrationResponse(
+    val email: String,
+    @SerializedName("id")
+    val id: Long,
+    val name: String,
+    val password: String
 )
 
 data class PersonaQuestionRequest(
@@ -34,4 +50,20 @@ data class LocalizedText(
 data class TranslatedLanguage(
     var language: String,
     var text: String
+)
+data class TnxGroup(
+    val description: String,
+    val transactions: List<Transaction>
+)
+data class Transaction(
+    val credit: Int,
+    val debit: Int,
+    val ledger: Ledger
+)
+data class Ledger(
+    val id: Int
+)
+
+data class LedgerRequest(
+    var name : String
 )

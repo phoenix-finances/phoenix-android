@@ -28,7 +28,6 @@ public class App extends MultiDexApplication {
         getPreferences().edit().putString("token", token)
                 .apply();
     }
-
     public static String getToken(){
         return getPreferences().getString("token", null);
     }

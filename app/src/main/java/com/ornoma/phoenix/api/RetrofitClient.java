@@ -13,7 +13,7 @@ public class RetrofitClient {
     private static Retrofit retrofit;
     private static OkHttpClient okHttpClient;
 
-    private RetrofitClient(){
+    private RetrofitClient() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
@@ -21,17 +21,20 @@ public class RetrofitClient {
                 .build();
     }
 
-    public static synchronized RetrofitClient getInstance(){
+    public static synchronized RetrofitClient getInstance() {
         if (okHttpClient == null)
             initOkHttp();
-        if(retrofitClient == null){
+        if (retrofitClient == null) {
             retrofitClient = new RetrofitClient();
         }
         return retrofitClient;
     }
 
     private static void initOkHttp() {
-        OkHttpClient.Builder builder = (new OkHttpClient()).newBuilder().connectTimeout(60L, TimeUnit.SECONDS).readTimeout(60L, TimeUnit.SECONDS).writeTimeout(60L, TimeUnit.SECONDS);
+        OkHttpClient.Builder builder = (new OkHttpClient()).newBuilder()
+                .connectTimeout(60L, TimeUnit.SECONDS)
+                .readTimeout(60L, TimeUnit.SECONDS)
+                .writeTimeout(60L, TimeUnit.SECONDS);
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(interceptor);
@@ -39,7 +42,7 @@ public class RetrofitClient {
         RetrofitClient.okHttpClient = builder.build();
     }
 
-   public Api getApi(){
+    public Api getApi() {
         return retrofit.create(Api.class);
-   }
+    }
 }

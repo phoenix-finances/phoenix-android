@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = LoginActivity.class.getSimpleName();
     EditText email, password;
     Button logIn;
-    TextView registerLink;
+    TextView registerLink, errorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = findViewById(R.id.etPassword);
         logIn = findViewById(R.id.logButton);
         registerLink = findViewById(R.id.regLink);
-
+        errorText = findViewById(R.id.tvError);
         registerLink.setOnClickListener(this);
         logIn.setOnClickListener(this);
     }
@@ -96,9 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Log.d(TAG, "username: " + loginResponse.getUsername());
                     App.saveToken(loginResponse.getJwtToken());
                     testMySelf();
-                    //Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     // TODO show invalid credentials
+                    errorText.setText("! Invalid credentials ! Try Again");
                 }
             }
 
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private void testMySelf(){
+    private void testMySelf() {
         String auth = String.format("Bearer %s", App.getToken());
         RetrofitClient.getInstance().getApi().getMyself(auth)
                 .enqueue(new Callback<UserResponse>() {
@@ -128,3 +128,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 }
+

@@ -2,22 +2,29 @@ package com.ornoma.phoenix.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ornoma.phoenix.App;
 import com.ornoma.phoenix.R;
+import com.ornoma.phoenix.api.RetrofitClient;
+import com.ornoma.phoenix.api.response.RegistrationRequest;
+import com.ornoma.phoenix.api.response.RegistrationResponse;
+import com.ornoma.phoenix.api.response.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private static final String TAG = RegistrationActivity.class.getSimpleName();
     EditText name, email, password;
     Button registerButton;
     TextView loginLink;
@@ -38,16 +45,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         registerButton.setOnClickListener(this);
     }
 
-
-    /* public void onClick(View view) {
-      switch (view.getId()){
-         case R.id.regButton:
-             Toast.makeText(this, "register", Toast.LENGTH_SHORT).show();
-            break;
-          case R.id.loginLink:
-              switchOnLogin();
-               }
-    }*/
     @Override
     public void onClick(View view) {
         int viewId = view.getId();
@@ -86,35 +83,31 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             password.setError("Please enter your password");
             return;
         }
-        if (userPassword.length() < 8) {
+        if (userPassword.length() < 4) {
             password.requestFocus();
             password.setError("Please Enter correct password");
-
+            return;
         }
+        RegistrationRequest request = new RegistrationRequest(userName, userEmail, userPassword);
+       Call<RegistrationResponse> call = RetrofitClient.getInstance()
+               .getApi().register(request);
+       call.enqueue(new Callback<RegistrationResponse>() {
+           @Override
+           public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+               if (response.isSuccessful()) {
+                   RegistrationResponse registrationResponse = response.body();
+                   if (registrationResponse != null) {
+                       Log.d(TAG, "onResponse: " + registrationResponse.getId());
+                       Log.d(TAG, "onResponse: " + registrationResponse.getName());
+                       Log.d(TAG, "onResponse: " + registrationResponse.getEmail());
+                       Log.d(TAG, "onResponse: " + registrationResponse.getPassword());
+                   }
+               }
+           }
+           @Override
+           public void onFailure(Call<RegistrationResponse> call, Throwable t) {
 
-
-//        Call<RegisterResponse> call = RetrofitClient
-//                .getInstance()
-//                .getApi()
-//                .register(userName,userEmail,userPassword);
-//
-//        call.enqueue(new Callback<RegisterResponse>() {
-//            @Override
-//            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-//         RegisterResponse registerResponse=response.body();
-//               if(response.isSuccessful()){
-//                   Toast.makeText(RegistrationActivity.this, registerResponse.getMessage(), Toast.LENGTH_SHORT).show();
-//               }else {
-//                   Toast.makeText(RegistrationActivity.this, registerResponse.getError(), Toast.LENGTH_SHORT).show();
-//               }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RegisterResponse> call, Throwable t) {
-//                Toast.makeText(RegistrationActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
+           }
+       });
     }
 }

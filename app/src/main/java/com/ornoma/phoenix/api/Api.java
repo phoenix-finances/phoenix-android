@@ -3,12 +3,12 @@ package com.ornoma.phoenix.api;
 
 import com.ornoma.phoenix.api.response.LoginRequest;
 import com.ornoma.phoenix.api.response.LoginResponse;
-import com.ornoma.phoenix.api.response.RegisterResponse;
+import com.ornoma.phoenix.api.response.RegistrationRequest;
+import com.ornoma.phoenix.api.response.RegistrationResponse;
 import com.ornoma.phoenix.api.response.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -17,12 +17,13 @@ import retrofit2.http.Query;
 
 public interface Api {
 
-    @POST("/api/users")
-    Call<RegisterResponse> register(
-            @Field("username") String username,
-            @Field("email") String email,
-            @Field("password") String password
-    );
+    @POST("/users")
+    Call<RegistrationResponse> register(
+           /* @Query("username") String username,
+            @Query("email") String email,
+            @Query("password") String password*/
+            @Body RegistrationRequest request
+            );
 
     @POST("/users/login")
     Call<LoginResponse> login(@Body LoginRequest request);
