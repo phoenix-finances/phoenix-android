@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    //ME
     private void testMySelf() {
         String auth = String.format("Bearer %s", App.getToken());
         RetrofitClient.getInstance().getApi().getMyself(auth)
@@ -126,6 +127,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }
                 });
+    }
+
+
+    private void createLedgers(){
+        String auth = String.format("Bearer %s", App.getToken());
     }
 }
 

@@ -1,11 +1,15 @@
 package com.ornoma.phoenix.api;
 
 
+import com.ornoma.phoenix.api.response.CreateLedgersRequest;
+import com.ornoma.phoenix.api.response.CreateLedgersResponse;
 import com.ornoma.phoenix.api.response.LoginRequest;
 import com.ornoma.phoenix.api.response.LoginResponse;
 import com.ornoma.phoenix.api.response.RegistrationRequest;
 import com.ornoma.phoenix.api.response.RegistrationResponse;
 import com.ornoma.phoenix.api.response.UserResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,27 +21,34 @@ import retrofit2.http.Query;
 
 public interface Api {
 
+    //Registration
     @POST("/users")
     Call<RegistrationResponse> register(
-           /* @Query("username") String username,
-            @Query("email") String email,
-            @Query("password") String password*/
             @Body RegistrationRequest request
-            );
+    );
 
+    //Login
     @POST("/users/login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
     // /users/me?param1=value1&param2=value2
 
-    @POST("/users/{userId}")
+   /* @POST("/users/{userId}")
     Call<?> testReferences(
             @Query("param1") String p1, @Query("param2") String p2, @Body LoginRequest request,
             @Path("userId") String userId,
             @Header("Authorization") String token
-    );
+    );*/
 
+    //Me
     @GET("/users/me")
     Call<UserResponse> getMyself(@Header("Authorization") String auth);
+
+    //Create Ledgers
+    @POST("/ledgers")
+    Call<CreateLedgersResponse> createLed(@Header("Authorization") String auth,@Body CreateLedgersRequest request);
+
+    @GET("/ledgers")
+    Call<List<CreateLedgersResponse>> getLedgers(@Header("Authorization") String auth);
 }
 

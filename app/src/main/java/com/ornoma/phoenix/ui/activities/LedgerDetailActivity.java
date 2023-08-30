@@ -25,6 +25,8 @@ import com.ornoma.phoenix.ui.adapters.LedgerAdapter;
 import com.ornoma.phoenix.ui.adapters.LedgerTrAdapter;
 import com.ornoma.phoenix.ui.dialogs.NewLedgerDialogue;
 
+import java.util.ArrayList;
+
 @SuppressWarnings("FieldCanBeLocal")
 public class LedgerDetailActivity extends AppCompatActivity {
     private class CustomNewLedgerDialogue extends NewLedgerDialogue {
@@ -61,8 +63,8 @@ public class LedgerDetailActivity extends AppCompatActivity {
 
         ledgerId = getIntent().getIntExtra(KEY_LEDGER_ID, 1);
 
-        bindActivity();
-        bindList();
+//        bindActivity();
+//        bindList();
         bindSubList();
     }
 
@@ -85,13 +87,13 @@ public class LedgerDetailActivity extends AppCompatActivity {
 
     private void bindSubList(){
         subListLedgerIdArray = masterCache.getLedgerIds(ledgerId);
-        ledgerAdapter = new LedgerAdapter(this, subListLedgerIdArray);
+        ledgerAdapter = new LedgerAdapter(new ArrayList<>());
         recyclerView.setAdapter(ledgerAdapter);
-        reloadColumns();
+//        reloadColumns();
     }
 
     @SuppressWarnings("unused")
-    private void reloadColumns(){
+  /*  private void reloadColumns(){
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -109,18 +111,18 @@ public class LedgerDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         recyclerView.getAdapter().notifyDataSetChanged();
-    }
+    }*/
 
-    private void bindList(){
+ /*   private void bindList(){
         rawIdArray = masterCache.getRawTransIdArray(ledgerId);
         ledgerTrAdapter = new LedgerTrAdapter(this, rawIdArray);
         listView.setAdapter(ledgerTrAdapter);
         ledgerCache = LedgerCache.getInstance(this);
         ledger = ledgerCache.getLedger(ledgerId);
         setTitle(ledgerId + " " + ledger.getName());
-    }
+    }*/
 
-    private void bindActivity(){
+/*    private void bindActivity(){
         listView = (ListView)findViewById(R.id.listView);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         fab = (FloatingActionButton)findViewById(R.id.fab_add);
@@ -144,7 +146,7 @@ public class LedgerDetailActivity extends AppCompatActivity {
                 customNewLedgerDialogue = new CustomNewLedgerDialogue(v.getContext());
                 customNewLedgerDialogue.show();
             }});
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

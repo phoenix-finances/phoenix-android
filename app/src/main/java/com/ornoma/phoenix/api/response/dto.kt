@@ -32,7 +32,7 @@ data class RegistrationResponse(
     val password: String
 )
 
-data class PersonaQuestionRequest(
+/*data class PersonaQuestionRequest(
     var title: LocalizedText,
     var text: LocalizedText,
     var hint: LocalizedText,
@@ -50,20 +50,18 @@ data class LocalizedText(
 data class TranslatedLanguage(
     var language: String,
     var text: String
-)
-data class TnxGroup(
-    val description: String,
-    val transactions: List<Transaction>
-)
-data class Transaction(
-    val credit: Int,
-    val debit: Int,
-    val ledger: Ledger
-)
-data class Ledger(
-    val id: Int
+)*/
+
+//Create ledgers
+data class CreateLedgersRequest(
+    var name: String
 )
 
-data class LedgerRequest(
-    var name : String
+data class CreateLedgersResponse(
+    @SerializedName("id")
+    var id: Long,
+    var name: String,
+    var balance:Long?,
+    var transactionCount:Int,
+    var parent: Long?
 )
