@@ -2,6 +2,9 @@
     <string name="app_name">financia</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="add_button">Add</string>
 
     <string name="title_text">financia</string>
 

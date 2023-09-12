@@ -3,24 +3,34 @@ package com.ornoma.phoenix.ui.activities;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,16 +39,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import com.ornoma.phoenix.App;
 import com.ornoma.phoenix.R;
+import com.ornoma.phoenix.api.RetrofitClient;
+import com.ornoma.phoenix.api.response.CreateLedgersResponse;
 import com.ornoma.phoenix.factory.MasterCache;
+import com.ornoma.phoenix.ui.adapters.LedgerListAdapter;
 import com.ornoma.phoenix.ui.adapters.TransactionAdapter;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 @SuppressWarnings("FieldCanBeLocal")
-public class LauncherActivity extends AppCompatActivity
-implements NavigationView.OnNavigationItemSelectedListener{
+public class LauncherActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -51,6 +70,8 @@ implements NavigationView.OnNavigationItemSelectedListener{
 
     private MasterCache masterCache;
     private TransactionAdapter transactionAdapter;
+    DrawerLayout layout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
 
 
     //250608383673-rif494e9q2jpp5pvc03er9iu7qeitgip.apps.googleusercontent.com
@@ -65,9 +86,16 @@ implements NavigationView.OnNavigationItemSelectedListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-
+        layout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, layout, R.string.nav_open, R.string.nav_close);
+        layout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         bindActivity();
         bindAddAction();
         bindTransactionList();
@@ -80,7 +108,7 @@ implements NavigationView.OnNavigationItemSelectedListener{
         super.onResume();
     }
 
-    private void bindProfiles(){
+    private void bindProfiles() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -96,24 +124,27 @@ implements NavigationView.OnNavigationItemSelectedListener{
             textViewProfileName.setText(account.getDisplayName());
         } else {
             Log.d("Launcher", "Signing Out");
-            try{Auth.GoogleSignInApi.signOut(mGoogleApiClient);}
-            catch (Exception e){e.printStackTrace();}
+            try {
+                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             //finish();
         }
         imageButtonProfile.setOnClickListener(v -> openProfileActivity());
     }
 
-    private void openProfileActivity(){
+    private void openProfileActivity() {
         Intent intentProfile = new Intent(this, ProfileActivity.class);
         startActivity(intentProfile);
     }
 
-    private void bindTransactionList(){
+    private void bindTransactionList() {
         int[] transactionRawIdArray = masterCache.getTransactionRawIds();
         bindTransactionList(transactionRawIdArray);
     }
 
-    private void bindTransactionList(int[] transactionRawIdArray){
+    private void bindTransactionList(int[] transactionRawIdArray) {
         transactionAdapter = new TransactionAdapter(this, transactionRawIdArray);
         recyclerView.setAdapter(transactionAdapter);
 
@@ -123,19 +154,20 @@ implements NavigationView.OnNavigationItemSelectedListener{
         reloadColumns();
     }
 
-    private void bindActivity(){
-        navigationView = (NavigationView)findViewById(R.id.nav_view);
-        drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-        floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add);
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        textViewTitle = (TextView)findViewById(R.id.textView_title);
+    private void bindActivity() {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        textViewTitle = (TextView) findViewById(R.id.textView_title);
 
         navigationView.setNavigationItemSelectedListener(this);
-        floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add);
         masterCache = new MasterCache(this);
-        View headerLayout = navigationView.getHeaderView(0);;
-        imageButtonProfile = (ImageButton)headerLayout.findViewById(R.id.imageButton_profile);
-        textViewProfileName = (TextView)headerLayout.findViewById(R.id.textView_profile_name);
+        View headerLayout = navigationView.getHeaderView(0);
+        ;
+        imageButtonProfile = (ImageButton) headerLayout.findViewById(R.id.imageButton_profile);
+        textViewProfileName = (TextView) headerLayout.findViewById(R.id.textView_profile_name);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -146,7 +178,7 @@ implements NavigationView.OnNavigationItemSelectedListener{
         toolbar.setTitle("");
     }
 
-    private void onDateChanged(int year, int month, int dayOfMonth){
+    private void onDateChanged(int year, int month, int dayOfMonth) {
         Calendar calendarFrom = new GregorianCalendar(year, month, dayOfMonth);
         Calendar calendarTo = new GregorianCalendar(year, month, dayOfMonth);
 
@@ -155,7 +187,7 @@ implements NavigationView.OnNavigationItemSelectedListener{
         bindTransactionList(idArray);
     }
 
-    private void reloadColumns(){
+    private void reloadColumns() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -166,8 +198,8 @@ implements NavigationView.OnNavigationItemSelectedListener{
         int pubWidth = resources.getInteger(R.integer.global_publication_item_width);
         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pubWidth, resources.getDisplayMetrics());
 
-        int max_column_width = (int)pixels;
-        int column_count = width/max_column_width;
+        int max_column_width = (int) pixels;
+        int column_count = width / max_column_width;
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(column_count, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -175,28 +207,29 @@ implements NavigationView.OnNavigationItemSelectedListener{
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    private void bindAddAction(){
+    private void bindAddAction() {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                handleAddNewTransactionEvent();}});
+            @Override
+            public void onClick(View v) {
+                handleAddNewTransactionEvent();
+            }
+        });
     }
 
-    private void handleAddNewTransactionEvent(){
+    private void handleAddNewTransactionEvent() {
         Intent intentNewTransaction = new Intent(this, NewTransactionActivity.class);
         startActivity(intentNewTransaction);
     }
 
-    private void openLedgerList(){
-        Intent intentLedgerList = new Intent(this, LedgerListActivity.class);
-        startActivity(intentLedgerList);
-    }
+    private List<CreateLedgersResponse> ledgerDataList;
+    String auth = String.format("Bearer %s", App.getToken());
+    private LedgerListAdapter adapter;
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_ledger:
-                openLedgerList();
-                break;
+        if (item.getItemId() == R.id.nav_ledger) {
+            Intent intent = new Intent(LauncherActivity.this, LedgerList.class);
+            startActivity(intent);
         }
         return true;
     }

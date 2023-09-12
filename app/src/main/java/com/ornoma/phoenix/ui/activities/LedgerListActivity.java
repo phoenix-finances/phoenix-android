@@ -312,7 +312,6 @@ public class LedgerListActivity extends AppCompatActivity {
                                 LedgerAdapter adapter = new LedgerAdapter(list);
                                 recyclerView.setAdapter(adapter);
                             }
-
                             @Override
                             public void onFailure(Call<List<CreateLedgersResponse>> call, Throwable t) {
 

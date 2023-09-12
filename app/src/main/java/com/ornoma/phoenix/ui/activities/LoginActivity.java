@@ -2,6 +2,7 @@ package com.ornoma.phoenix.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -130,8 +131,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void createLedgers(){
-        String auth = String.format("Bearer %s", App.getToken());
-    }
+
 }
 

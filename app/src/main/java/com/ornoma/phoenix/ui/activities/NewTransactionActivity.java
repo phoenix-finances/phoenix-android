@@ -81,7 +81,7 @@ public class NewTransactionActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK){
             switch (requestCode){
                 case REQUEST_LEDGER_LIST:
-                    int ledgerId = data.getIntExtra(LedgerListActivity.KEY_LEDGER_ID, 0);
+                    int ledgerId = data.getIntExtra(LedgerList.KEY_LEDGER_ID, 0);
                     Log.d(TAG, "onActivityResult() -> ledgerId " + ledgerId);
                     if (ledgerId != 0)
                         rawTransactionAdapter.onLedgerSelected(ledgerId);

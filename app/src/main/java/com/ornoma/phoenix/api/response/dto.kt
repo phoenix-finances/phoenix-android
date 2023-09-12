@@ -58,10 +58,37 @@ data class CreateLedgersRequest(
 )
 
 data class CreateLedgersResponse(
-    @SerializedName("id")
     var id: Long,
     var name: String,
     var balance:Long?,
     var transactionCount:Int,
     var parent: Long?
+)
+
+
+
+data class CreateTransactionGroupRequest(
+    val description: String, //Notes
+    val transactions: List<TransactionDetail>
+)
+
+data class TransactionDetail(
+    val ledgerId: Int,
+    val debit: Double, //tv->debit
+    val credit: Double //tv->credit
+)
+
+data class CreateTransactionGroupResponse(
+    val id: Int,
+    val description: String,
+    val transactions: List<TransactionDetailResponse>,
+    val transactionTimelineId: Int
+)
+
+data class TransactionDetailResponse(
+    val id: Int,
+    val transactionGroupId: Int,
+    val ledgerId: Int,
+    val debit: Double,
+    val credit: Double
 )

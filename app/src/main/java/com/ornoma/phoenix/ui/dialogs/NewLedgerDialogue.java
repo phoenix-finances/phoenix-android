@@ -123,7 +123,7 @@ public abstract class NewLedgerDialogue extends Dialog{
         String auth = String.format("Bearer %s", App.getToken());
         CreateLedgersRequest request = new CreateLedgersRequest(ledgerName);
         Call<CreateLedgersResponse> call = RetrofitClient.getInstance()
-                .getApi().createLed(auth,request);
+                .getApi().createLedger(auth,request);
 
         call.enqueue(new Callback<CreateLedgersResponse>() {
             @Override

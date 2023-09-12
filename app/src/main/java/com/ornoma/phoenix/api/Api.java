@@ -3,6 +3,8 @@ package com.ornoma.phoenix.api;
 
 import com.ornoma.phoenix.api.response.CreateLedgersRequest;
 import com.ornoma.phoenix.api.response.CreateLedgersResponse;
+import com.ornoma.phoenix.api.response.CreateTransactionGroupRequest;
+import com.ornoma.phoenix.api.response.CreateTransactionGroupResponse;
 import com.ornoma.phoenix.api.response.LoginRequest;
 import com.ornoma.phoenix.api.response.LoginResponse;
 import com.ornoma.phoenix.api.response.RegistrationRequest;
@@ -46,9 +48,13 @@ public interface Api {
 
     //Create Ledgers
     @POST("/ledgers")
-    Call<CreateLedgersResponse> createLed(@Header("Authorization") String auth,@Body CreateLedgersRequest request);
+    Call<CreateLedgersResponse> createLedger(@Header("Authorization") String auth,@Body CreateLedgersRequest request);
 
     @GET("/ledgers")
     Call<List<CreateLedgersResponse>> getLedgers(@Header("Authorization") String auth);
+
+    @POST("/transaction-groups")
+    Call<CreateTransactionGroupResponse> createGroupTransaction(@Header("Authorization") String auth, @Body CreateTransactionGroupRequest groupTransactionRequest);
+
 }
 
